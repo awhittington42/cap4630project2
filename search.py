@@ -6,6 +6,31 @@ import matplotlib.animation as animation
 from utils import *
 from grid import *
 
+def bfs(problem, dest):
+    current = problem
+    pathCost = 0
+    if current == dest:
+        return current
+
+    frontier = [] # Fifo point queue
+    reached = [] # set to check if point has been reached before.
+    while !(len(frontier) == 0):
+        node = frontier.pop(-1)
+
+        for #need to finish expand before finishing this
+
+def expand(point, informed): #expand order - up, right, down, left (clockwise)
+    """
+    general idea:
+
+    for BFS and DFS, check if point would cause path to go into an enclosure, which is forbidden. Return first node found clockwise that satisfies this condition.
+
+    for informed searches, need to calculate action cost for each move as well as check if enclosure is encountered.
+    """
+    if !informed: #BFS or DFS, don't worry about action cost.
+
+
+
 def gen_polygons(worldfilepath):
     polygons = []
     with open(worldfilepath, "r") as f:
@@ -48,7 +73,25 @@ if __name__ == "__main__":
         for i in range(0, len(polygon)):
             draw_green_line(ax, [polygon[i].x, polygon[(i+1)%len(polygon)].x], [polygon[i].y, polygon[(i+1)%len(polygon)].y])
 
-    #### Here call your search to compute and collect res_path
+    #### Here call search to compute and collect res_path
+
+    """
+    TODO:
+
+    Breadth-First Search
+    Depth-First Search
+    Greedy Best-First Search
+    A* Search
+
+    *Graph search versions*
+
+    Create more turf and enclosure polygons
+
+    """
+
+    # BFS
+
+
 
     res_path = [Point(24,17), Point(25,17), Point(26,17), Point(27,17),  
                 Point(28,17), Point(28,18), Point(28,19), Point(28,20)]
