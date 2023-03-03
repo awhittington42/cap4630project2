@@ -14,10 +14,10 @@ def bfs(problem, dest):
 
     frontier = [] # Fifo point queue
     reached = [] # set to check if point has been reached before.
-    while !(len(frontier) == 0):
+    while len(frontier) != 0:
         node = frontier.pop(-1)
 
-        for #need to finish expand before finishing this
+        #for need to finish expand before finishing this
 
 def expand(point, informed): #expand order - up, right, down, left (clockwise)
     """
@@ -27,7 +27,7 @@ def expand(point, informed): #expand order - up, right, down, left (clockwise)
 
     for informed searches, need to calculate action cost for each move as well as check if enclosure is encountered.
     """
-    if !informed: #BFS or DFS, don't worry about action cost.
+    #if !informed:BFS or DFS, don't worry about action cost.
 
 
 
