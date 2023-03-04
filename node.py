@@ -1,15 +1,16 @@
 from grid import *
 
-class node:
+class Node:
     Point state
-    node parent
+    Node parent
     action
     pathCost
 
-    def __init__(self, point, action, pathCost):
+    def __init__(self, point, parent, action, pathCost):
         this.state = point
         this.action = action
         this.pathCost = pathCost
+        this.parent = parent
 
     def getParent(self):
         return this.parent

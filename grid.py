@@ -15,6 +15,8 @@ class Point:
             return False
     def to_tuple(self):
         return self.x, self.y
+    def adjacentPoints(self): # returns tuple of the ordered action points
+        return [(self.x, self.y + 1), (self.x + 1, self.y), (self.x, self.y + 1), (self.x - 1, self.y)]
 
 def draw_board():
     # create a figure to draw the board
