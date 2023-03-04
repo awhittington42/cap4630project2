@@ -3,9 +3,21 @@ import matplotlib.pyplot as plt
 MAX = 50
 
 class Point:
-    def __init__(self, x, y):
+    def __init__(self, x, y, action = "empty"):
         self.x = x
         self.y = y
+        self.illegal = False
+        self.action = action
+        self.i = 0
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.i < 51:
+            z = self.i
+            self.i += 1
+            return z
+        else:
+            raise StopIteration
     def __str__(self):
         return f'({self.x}, {self.y})'
     def __eq__(self, other) :
@@ -13,10 +25,36 @@ class Point:
             return True
         else:
             return False
+    def isLegal(self):
+        if self.illegal == True:
+            return False
+        else:
+            return True
+    def getAction(self):
+        return self.action
+    def setIllegal(self):
+        self.illegal = True
     def to_tuple(self):
         return self.x, self.y
     def adjacentPoints(self): # returns tuple of the ordered action points
-        return [(self.x, self.y + 1), (self.x + 1, self.y), (self.x, self.y + 1), (self.x - 1, self.y)]
+        p1 = Point(self.x, self.y + 1, "up")
+        p2 = Point(self.x + 1, self.y, "right")
+        p3 = Point(self.x, self.y - 1, "down")
+        p4 = Point(self.x - 1, self.y, "left")
+        if self.y <= 0:
+            print("vertical min found, illegal down point.")
+            p3.setIllegal()
+        elif self.y >= 50:
+            print("vertical max found, illegal up point.")
+            p1.setIllegal()
+        if self.x <= 0:
+            print("horizontal min found, illegal left point.")
+            p4.setIllegal()
+        elif self.x >= 50:
+            print("horizontal max found, illegal right point.")
+            p2.setIllegal()
+        return p1, p2, p3, p4
+        #return [(self.x, self.y + 1), (self.x + 1, self.y), (self.x, self.y + 1), (self.x - 1, self.y)]
 
 def draw_board():
     # create a figure to draw the board

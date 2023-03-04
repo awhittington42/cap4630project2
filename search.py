@@ -5,20 +5,32 @@ import matplotlib.animation as animation
 
 from utils import *
 from grid import *
+from node import *
 
-def bfs(problem, dest):
-    current = problem
+def bfSearch(problem, dest):
+    current = Node(problem)
     pathCost = 0
-    if current == dest:
+    if current.state == dest:
         return current
 
     frontier = Queue()
-    reached = [] # set to check if point has been reached before.
-    while !frontier.isEmpty():
+    frontier.push(current)
+    reached = [current.state] # set to check if point has been reached before.
+    while not frontier.isEmpty():
         node = frontier.pop()
-        #for need to finish expand before finishing this
+        nodes = expand(node, False)
+        for n in nodes:
+            print(n.state)
+            s = n.getPoint()
+            if s == dest:
+                return n
+            reached_count = reached.count(s)
+            if reached_count == 0:
+                reached.append(s)
+                frontier.push(n)
+    return -1
 
-def expand(point, informed): #expand order - up, right, down, left (clockwise)
+def expand(node, informed): #expand order - up, right, down, left (clockwise)
     """
     general idea:
 
@@ -26,8 +38,13 @@ def expand(point, informed): #expand order - up, right, down, left (clockwise)
 
     for informed searches, need to calculate action cost for each move as well as check if enclosure is encountered.
     """
-    if !informed: #BFS or DFS, don't worry about action cost.
-        # first, up
+    adjPoints = node.getPoint().adjacentPoints()
+    if informed == False: #BFS or DFS, don't worry about action cost.
+        for point in adjPoints:
+            if point.isLegal():
+                cost = node.getCost() + 1
+                n = Node(point, node, point.getAction(), cost)
+                yield n
 
 
 
@@ -51,8 +68,8 @@ if __name__ == "__main__":
     epolygons = gen_polygons('TestingGrid/world1_enclosures.txt')
     tpolygons = gen_polygons('TestingGrid/world1_turfs.txt')
 
-    source = Point(24,17)
-    dest = Point(28,20)
+    source = Point(8,10)
+    dest = Point(43,45)
 
     fig, ax = draw_board()
     draw_grids(ax)
@@ -92,11 +109,25 @@ if __name__ == "__main__":
     """
 
     # BFS
+    bfsNode = bfSearch(source, dest)
+    if bfsNode == -1:
+        print("Error with bfs algorithm")
+        exit(-1)
+    res_path = []
+    pCost = 0
+    cur = bfsNode
+    print(bfsNode)
+    while bfsNode.state != source:
+        print("point is " + str(bfsNode.getPoint().x) + ", " + str(bfsNode.getPoint().y))
+        res_path.append(bfsNode.getPoint())
+        bfsNode = bfsNode.parent
+    res_path.append(bfsNode.getPoint())
 
 
 
-    res_path = [Point(24,17), Point(25,17), Point(26,17), Point(27,17),  
-                Point(28,17), Point(28,18), Point(28,19), Point(28,20)]
+
+    #res_path = [Point(24,17), Point(25,17), Point(26,17), Point(27,17),  
+                #Point(28,17), Point(28,18), Point(28,19), Point(28,20)]
     
     for i in range(len(res_path)-1):
         draw_result_line(ax, [res_path[i].x, res_path[i+1].x], [res_path[i].y, res_path[i+1].y])
