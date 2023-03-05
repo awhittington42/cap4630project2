@@ -30,6 +30,17 @@ def bfSearch(problem, dest):
                 frontier.push(n)
     return -1
 
+def dfSearch(problem, dest):
+    current = Node(problem)
+    frontier = PriorityQueue()
+    frontier.push(current)
+    reached = [current.state]
+
+    while not frontier.isEmpty():
+        node = frontier.pop()
+        if node.state == dest:
+
+
 def expand(node, informed): #expand order - up, right, down, left (clockwise)
     """
     general idea:
