@@ -1,0 +1,1 @@
+Currently unfinished, this project is an implementation of simple AI sorting algorithms, including Depth-first search, breadth-first search, greedy best fit, and A*. As of now only BFS is implemented.
